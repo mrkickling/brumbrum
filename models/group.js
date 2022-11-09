@@ -18,6 +18,15 @@ class Group {
         this.expenses.push(event);
     }
 
+    addExpenses(events) {
+        for (const id in events) {
+            if (Object.hasOwnProperty.call(events, id)) {
+                const event = events[id];
+                this.expenses.push(event);
+            }
+        }
+    }
+
     whoOwsWhatToWho() {
         // Per transaction:
         // What did everyone pay

@@ -27,14 +27,15 @@ describe('Group', function () {
             const group = new Group('A');
             group.addMember("Peter");
             group.addMember("Joakim");
-            for (let index = 0; index < 10; index++) {
-                const expense = new Event("expense", 100, "Peter", ["Peter", "Joakim"]);
-                group.addExpense(expense);
-            }
+            const expense1 = new Event("expense1", 100, "Peter", ["Peter", "Joakim"]);
+            const expense2 = new Event("expense2", 10, "Peter", ["Joakim"]);
+            const expense3 = new Event("expense3", 5, "Peter", ["Joakim", "Peter"]);
+            const expense4 = new Event("expense4", 10, "Joakim", ["Joakim", "Peter"]);
+            group.addExpenses([expense1, expense2, expense3, expense4]);
             let owings = group.whoOwsWhatToWho();
-            assert(owings["Joakim"]["Peter"] == 500);
+            assert(owings["Joakim"]["Peter"] == (100 / 2) + 10 + (5 / 2));
             assert(owings["Joakim"]["Joakim"] == 0);
-            assert(owings["Peter"]["Joakim"] == 0);
+            assert(owings["Peter"]["Joakim"] == (10 / 2));
             assert(owings["Peter"]["Peter"] == 0);
         })
     });

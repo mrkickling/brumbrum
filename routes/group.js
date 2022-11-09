@@ -14,9 +14,10 @@ groups = {
     }
 }
 
-/* GET group home page. */
+/* GET group home page. What should be there? */
 router.get('/', function (req, res, next) {
     console.log("group root")
+    res.status(404).render('group')
 });
 
 router.get('/:groupID', function (req, res, next) {
