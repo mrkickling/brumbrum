@@ -2,4 +2,7 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to #{title}. This is a website to keep track of expenses for car pools. Splitwise but specialized on cars.
+  form(action="group")
+    input(name="id")    
+    input(type="submit" value="Join group")
