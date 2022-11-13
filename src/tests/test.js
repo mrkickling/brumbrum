@@ -1,6 +1,6 @@
 // 👇️ named import
 var Group = require('../models/group.js');
-var Event = require('../models/event.js');
+const { Event, Expense, Trip } = require('../models/event.js');
 
 var assert = require('assert');
 const exp = require('constants');
@@ -27,12 +27,13 @@ describe('Group', function () {
             const group = new Group('A');
             group.addMember("Peter");
             group.addMember("Joakim");
-            const expense1 = new Event("expense1", 100, "Peter", ["Peter", "Joakim"]);
-            const expense2 = new Event("expense2", 10, "Peter", ["Joakim"]);
-            const expense3 = new Event("expense3", 5, "Peter", ["Joakim", "Peter"]);
-            const expense4 = new Event("expense4", 10, "Joakim", ["Joakim", "Peter"]);
+            const expense1 = new Expense("expense1", 100, "Peter", ["Peter", "Joakim"]);
+            const expense2 = new Expense("expense2", 10, "Peter", ["Joakim"]);
+            const expense3 = new Expense("expense3", 5, "Peter", ["Joakim", "Peter"]);
+            const expense4 = new Expense("expense4", 10, "Joakim", ["Joakim", "Peter"]);
             group.addExpenses([expense1, expense2, expense3, expense4]);
             let owings = group.whoOwsWhatToWho();
+            console.log(owings);
             assert(owings["Joakim"]["Peter"] == (100 / 2) + 10 + (5 / 2));
             assert(owings["Joakim"]["Joakim"] == 0);
             assert(owings["Peter"]["Joakim"] == (10 / 2));

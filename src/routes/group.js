@@ -1,5 +1,19 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+const { connect } = require('.');
+var dbconfig = require('../config/db')
+var connection = mysql.createConnection(dbconfig);
+
+// connection.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     var sql = "CREATE TABLE groups (id VARCHAR(255), name VARCHAR(255), description VARCHAR(255))";
+//     con.query(sql, function (err, result) {
+//         if (err) throw err;
+//         console.log("Table created");
+//     });
+// });
 
 groups = {
     "AKFI4F5":
@@ -25,7 +39,7 @@ router.get('/:groupID', function (req, res, next) {
     if (groups[groupID]) {
         res.render('group', { group: groups[groupID] });
     } else {
-        res.status(404).render("error", { message: "404: The group does not exist.", error: { status: "Do you want to create a new group?" } });
+        res.status(404).render("error", { title: "error", message: "404: The group does not exist.", error: { status: "Do you want to create a new group?" } });
     }
 });
 

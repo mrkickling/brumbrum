@@ -44,8 +44,8 @@ class Group {
 
         for (const i in this.expenses) {
             var expense = this.expenses[i]
-            var paidBy = expense.paidBy;
-            var paidFor = expense.paidFor;
+            var paidBy = expense.doneBy;
+            var paidFor = expense.doneFor;
             var sum = expense.sum;
 
             // Withdraw from what they owe
