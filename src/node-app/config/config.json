@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "brumbrum",
+    "password": "brumbrum",
+    "database": "brumbrum",
+    "host": "mysqldb",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "brumbrum",
+    "password": "brumbrum",
+    "database": "brumbrum",
+    "host": "mysqldb",
+    "dialect": "mysql"
+  }
+}

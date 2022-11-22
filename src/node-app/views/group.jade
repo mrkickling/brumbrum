@@ -1,0 +1,50 @@
+extends layout
+include ./mixin
+
+block content
+  h2 Welcome to #{group.title}
+  p #{group.description}
+  p <b>Members</b>: 
+    each member in members
+      span #{member.dataValues.name}, 
+  
+  +add_income_modal("modal-add-income", "Lägg till inkomst", "Lägg till en inkomst", group.code, group.members)
+  h3 Inkomster 
+    button.btn.btn-primary(href="#" type="button" onclick="$('#modal-add-income').modal('show')") Ny inkomst
+  ul
+    each income in incomes
+      li 
+        b=income.dataValues.date.toLocaleString()
+        span : #{income.dataValues.description} #{income.dataValues.sum} kr - to 
+        each done_for in income.dataValues.done_fors
+          span #{done_for.dataValues.user.dataValues.name} (#{Math.round(1000 * done_for.dataValues.part)/10}%), 
+
+  +add_expense_modal("modal-add-expense", "Lägg till utgift", "Lägg till en utgift", group.code, group.members)
+  h3 Utgifter 
+    button.btn.btn-primary(href="#" type="button" onclick="$('#modal-add-expense').modal('show')") Ny utgift
+  ul
+    each expense in expenses
+      li 
+        b=expense.dataValues.date.toLocaleString()
+        span : #{expense.dataValues.description} #{expense.dataValues.sum} kr - betaldes av: 
+        each user in expense.dataValues.done_bies
+          span #{user.dataValues.user.dataValues.name}, 
+        span  för 
+        each user in expense.dataValues.done_fors
+          span #{user.dataValues.user.dataValues.name}, 
+
+  +add_trip_modal("modal-add-trip", "Lägg till resa", "Lägg till en resa", group.code, group.members)
+  h3 Resor 
+    button.btn.btn-primary(href="#" type="button" onclick="$('#modal-add-trip').modal('show')") Ny resa
+  ul
+    each trip in trips
+      li 
+        b=trip.dataValues.date.toLocaleString()
+        span : #{trip.dataValues.description} #{trip.dataValues.distance} km - dessa satt i bilen: 
+        each user in trip.dataValues.done_fors
+          span #{user.dataValues.user.dataValues.name}, 
+
+  p Bjud in en ny medlem med denna kod: #{group.code}
+
+  script(src="../javascripts/eventhandlers.js")   
+  script(src="../javascripts/initializers.js") 

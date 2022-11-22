@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h2 Skapa en ny grupp
+    form(method="post")
+        label(for="title") Titel
+        input.form-control(name="title")
+        label(for="description") Beskrivning
+        input.form-control(name="description")
+        label(for="members") Medlemmar (kommaseparerade)
+        input.form-control(name="members")
+        input.form-control(type="submit" value="Skapa grupp")
