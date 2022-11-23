@@ -1,0 +1,11 @@
+<mat-list>
+    <div mat-subheader>Events</div>
+    <button mat-raised-button (click)="showAddEventDialog()">Add event</button>
+    <mat-list-item *ngFor="let event of events">
+        <div matListItemIcon>{{event.type}}</div>
+        <div matListItemTitle>{{event.description}} - {{event.sum}}kr</div>
+        <div matListItemLine>{{event.date | date}}</div>
+        <div *ngIf="event.type!='income'" matListItemLine>Utfördes av </div>
+        <div *ngIf="event.type!=''" matListItemLine>Tilldelas </div>
+    </mat-list-item>
+</mat-list>
