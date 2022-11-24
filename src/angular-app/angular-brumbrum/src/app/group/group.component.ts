@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Group } from '../group';
+import { GroupEvent } from '../group-event';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
-import { GroupEventsComponent } from '../group-events/group-events.component';
 
 const emptyArticle = (): Group => ({
   id: 0,
@@ -11,7 +11,8 @@ const emptyArticle = (): Group => ({
   code: "Loading...",
   createdAt: "Loading...",
   updatedAt: "Loading...",
-  events: []
+  events: [],
+  members: []
 });
 
 
@@ -22,7 +23,7 @@ const emptyArticle = (): Group => ({
 })
 export class GroupComponent implements OnInit {
   group: Group = emptyArticle();
-  selectedEvent?: Event;
+  selectedEvent?: GroupEvent;
 
   constructor(
     private groupService: GroupService,
@@ -38,7 +39,7 @@ export class GroupComponent implements OnInit {
     this.getGroup();
   }
 
-  onSelect(event: Event): void {
+  onSelect(event: GroupEvent): void {
     this.selectedEvent = event;
   }
 }

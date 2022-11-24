@@ -5,4 +5,6 @@ export interface GroupEvent {
     distance: number | null;
     description: string;
     date: string;
+    done_fors: any[];
+    done_bies: any[];
 }

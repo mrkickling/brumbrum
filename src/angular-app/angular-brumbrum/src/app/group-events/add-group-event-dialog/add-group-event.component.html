@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Add event</h2>
+
+<mat-dialog-content [formGroup]="addEventForm">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Event type</mat-label>
+        <mat-select formControlName="type" [(ngModel)]="selectedTypeValue">
+            <mat-option *ngFor="let type of eventTypes" [value]="type.value">
+                {{type.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Event description" formControlName="description">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Date and time</mat-label>
+        <input type="datetime-local" matInput placeholder="When was it?" formControlName="time">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="selectedTypeValue!='trip'" appearance="outline">
+        <mat-label>Sum</mat-label>
+        <input type="number" matInput placeholder="What did it cost" formControlName="sum">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="selectedTypeValue=='trip'" appearance="outline">
+        <mat-label>Distance travelled</mat-label>
+        <input type="number" matInput placeholder="Length of ride (km)" formControlName="distance">
+    </mat-form-field>
+
+    <div *ngIf="selectedTypeValue=='expense'">
+        <label for="">Paid by</label>
+        <ng-multiselect-dropdown [placeholder]="'Pick users'" [settings]="dropdownSettings" [data]="dropdownList"
+            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" formControlName="doneby">
+        </ng-multiselect-dropdown>
+    </div>
+
+    <div>
+        <label *ngIf="selectedTypeValue=='trip'">Riders</label>
+        <label *ngIf="selectedTypeValue!='trip'">Beneficiaries</label>
+        <ng-multiselect-dropdown [placeholder]="'Pick users'" [settings]="dropdownSettings" [data]="dropdownList"
+            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" formControlName="donefor">
+        </ng-multiselect-dropdown>
+    </div>
+
+
+    <mat-dialog-actions>
+        <button mat-raised-button (click)="close()">Close</button>
+        <button mat-raised-button (click)="addEvent()">Add event</button>
+    </mat-dialog-actions>
+
+</mat-dialog-content>

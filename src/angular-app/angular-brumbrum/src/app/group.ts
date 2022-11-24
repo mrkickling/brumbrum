@@ -7,6 +7,6 @@ export interface Group {
     code: string;
     createdAt: string;
     updatedAt: string;
-    // members: string[];
+    members: any;
     events: GroupEvent[];
 }

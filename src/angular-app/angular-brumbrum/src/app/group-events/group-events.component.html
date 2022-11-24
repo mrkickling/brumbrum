@@ -1,11 +1,49 @@
-<mat-list>
-    <div mat-subheader>Events</div>
-    <button mat-raised-button (click)="showAddEventDialog()">Add event</button>
-    <mat-list-item *ngFor="let event of events">
-        <div matListItemIcon>{{event.type}}</div>
-        <div matListItemTitle>{{event.description}} - {{event.sum}}kr</div>
-        <div matListItemLine>{{event.date | date}}</div>
-        <div *ngIf="event.type!='income'" matListItemLine>Utfördes av </div>
-        <div *ngIf="event.type!=''" matListItemLine>Tilldelas </div>
-    </mat-list-item>
-</mat-list>
+<span style="margin-right:10px; font-weight:bold; font-size: 18px;">Events</span> <button mat-raised-button
+    style="margin-bottom:10px; margin-right:5px;" (click)="openAddEventDialog()">Add event</button>
+<mat-card class="example-card" *ngFor="let event of events | sortBydate">
+
+    <mat-card-header fxLayout="row" layout-margin>
+        <div>
+            <mat-card-title>
+                <span *ngIf="event.type=='income'" class="material-icons">
+                    payments
+                </span>
+                <span *ngIf="event.type=='expense'" class="material-icons">
+                    shopping_cart
+                </span>
+                <span *ngIf="event.type=='trip'" class="material-icons">
+                    emoji_transportation
+                </span>
+                {{event.description}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{event.date | dateAgo}}.
+
+                <span *ngIf="event.type!='trip'">
+                    Summa: {{event.sum}} kr
+                </span>
+                <span *ngIf="event.type=='trip'">
+                    Sträcka: {{event.distance}} km
+                </span>
+                <span *ngIf="event.type=='expense'">
+                    - By {{event.done_bies.length}}
+                </span>
+                <span>
+                    - For {{event.done_fors.length}}
+                </span>
+            </mat-card-subtitle>
+
+        </div>
+        <div>
+            <mat-card-actions style="position:absolute;right:0px">
+                <button mat-raised-button style="transform: scale(0.8);" (click)="openEditEventDialog(event)">
+                    <i class="material-icons">edit</i></button>
+                <button mat-raised-button style="transform: scale(0.8);" color="warn" (click)="deleteEvent(event)">
+                    <i class="material-icons">delete</i></button>
+            </mat-card-actions>
+
+        </div>
+
+    </mat-card-header>
+
+</mat-card>
