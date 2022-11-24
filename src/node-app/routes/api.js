@@ -38,6 +38,32 @@ router.get('/group/:groupID', function (req, res, next) {
     })
 });
 
+router.get('/group/:groupCode/finances', function (req, res, next) {
+    let groupCode = req.params.groupCode;
+    g = db.group.findOne({
+        where: {
+            code: groupCode
+        },
+        include: ["members",
+            {
+                model: db.event,
+                as: "events",
+                include: [
+                    { model: db.done_for, include: { model: db.user, as: "user" } },
+                    { model: db.done_by, include: { model: db.user, as: "user" } }
+                ]
+            }]
+    }).then(group => {
+        let sumIncomes = group.sumEvents("income", "sum");
+        let moneySpent = group.sumEvents("expense", "sum");
+        let distanceTravelled = group.sumEvents("trip", "distance");
+        let owings = group.whoOwsWhatToWho();
+        res.status(200).send({ owings: owings, moneySpent, sumIncomes, distanceTravelled });
+    }).catch(error => {
+        res.status(400).send({ error: { status: error } });
+    })
+});
+
 /* Endpoint to add an event to a group */
 router.post('/events/:groupCode', function (req, res, next) {
     let groupCode = req.params.groupCode;
