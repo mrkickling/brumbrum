@@ -31,14 +31,14 @@
         <input type="number" matInput placeholder="Length of ride (km)" formControlName="distance">
     </mat-form-field>
 
-    <div *ngIf="selectedTypeValue=='expense'">
+    <div *ngIf="selectedTypeValue=='expense' || selectedTypeValue=='fillupgas'">
         <label for="">Paid by</label>
         <ng-multiselect-dropdown [placeholder]="'Pick users'" [settings]="dropdownSettings" [data]="dropdownList"
             (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" formControlName="doneby">
         </ng-multiselect-dropdown>
     </div>
 
-    <div>
+    <div *ngIf="selectedTypeValue!='fillupgas'">
         <label *ngIf="selectedTypeValue=='trip'">Riders</label>
         <label *ngIf="selectedTypeValue!='trip'">Beneficiaries</label>
         <ng-multiselect-dropdown [placeholder]="'Pick users'" [settings]="dropdownSettings" [data]="dropdownList"

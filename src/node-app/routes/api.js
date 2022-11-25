@@ -54,14 +54,15 @@ router.get('/group/:groupCode/finances', function (req, res, next) {
                 ]
             }]
     }).then(group => {
+        if (group == null) {
+            res.status(400).send({ error: "Not found" })
+        }
         let sumIncomes = group.sumEvents("income", "sum");
-        let moneySpent = group.sumEvents("expense", "sum");
+        let moneySpent = group.sumEvents("expense", "sum") + group.sumEvents("fillupgas", "sum");
         let distanceTravelled = group.sumEvents("trip", "distance");
         let owings = group.whoOwsWhatToWho();
         res.status(200).send({ owings: owings, moneySpent, sumIncomes, distanceTravelled });
-    }).catch(error => {
-        res.status(400).send({ error: { status: error } });
-    })
+    }).catch(err => console.log(err))
 });
 
 /* Endpoint to add an event to a group */
@@ -69,7 +70,7 @@ router.post('/events/:groupCode', function (req, res, next) {
     let groupCode = req.params.groupCode;
     let eventType = req.body.type;
     console.log(req.body)
-    if (["income", "expense", "trip"].indexOf(eventType) < 0) {
+    if (["income", "expense", "trip", "fillupgas"].indexOf(eventType) < 0) {
         return res.status(400).send({ error: "Event type can not be " + eventType });
     }
     g = db.group.findOne({
@@ -78,6 +79,9 @@ router.post('/events/:groupCode', function (req, res, next) {
         },
         include: 'members'
     }).then(group => {
+        if (group == null) {
+            res.status(400).send({ error: "Not found" })
+        }
         let description = req.body.description;
         let sum = req.body.sum;
         let distance = req.body.distance;
@@ -118,7 +122,6 @@ router.post('/events/:groupCode', function (req, res, next) {
 
 /* Endpoint to delete an event */
 router.delete('/events/:eventID/:groupCode', function (req, res, next) {
-    console.log("truing to delete")
     let eventID = req.params.eventID;
     let groupCode = req.params.groupCode;
 
@@ -143,7 +146,6 @@ router.delete('/events/:eventID/:groupCode', function (req, res, next) {
 
 /* Endpoint to edit an event */
 router.put('/events/:eventID/:groupCode', function (req, res, next) {
-    console.log("HELLO THERE!")
     let eventID = req.params.eventID;
     let groupCode = req.params.groupCode;
     let type = req.body.type;
@@ -155,13 +157,8 @@ router.put('/events/:eventID/:groupCode', function (req, res, next) {
     doneFor = (!(doneFor instanceof Array)) ? [doneFor] : doneFor;
     let doneBy = (req.body.doneby == undefined || req.body.doneby.length == 0) ? [] : req.body.doneby;
     doneBy = (!(doneBy instanceof Array)) ? [doneBy] : doneBy;
-    console.log(doneFor)
-    console.log(doneBy)
     doneFor = doneFor.map(function (user) { return { userId: parseInt(user.id), part: (1 / doneFor.length) }; })
     doneBy = doneBy.map(function (user) { return { userId: parseInt(user.id), part: (1 / doneBy.length) }; })
-    console.log(doneFor);
-    console.log(doneBy);
-    console.log(eventID);
 
     g = db.event.findOne({
         where: {

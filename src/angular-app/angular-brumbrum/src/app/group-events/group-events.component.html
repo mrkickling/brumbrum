@@ -1,8 +1,10 @@
-<span style="margin-right:10px; font-weight:bold; font-size: 18px;">Events</span> <button mat-raised-button
-    style="margin-bottom:10px; margin-right:5px;" (click)="openAddEventDialog()">Add event</button>
+<span style="margin-right:10px; font-weight:bold; font-size: 18px;">Events</span>
+<button mat-raised-button style="margin-bottom:10px; margin-right:5px;" (click)="openAddEventDialog()" color="warn">
+    Add event
+</button>
 <mat-card class="example-card" *ngFor="let event of events | sortBydate">
 
-    <mat-card-header fxLayout="row" layout-margin>
+    <mat-card-header fxLayout="row" layout-margin (click)="onSelect(event)">
         <div>
             <mat-card-title>
                 <span *ngIf="event.type=='income'" class="material-icons">
@@ -10,6 +12,9 @@
                 </span>
                 <span *ngIf="event.type=='expense'" class="material-icons">
                     shopping_cart
+                </span>
+                <span *ngIf="event.type=='fillupgas'" class="material-icons">
+                    local_gas_station
                 </span>
                 <span *ngIf="event.type=='trip'" class="material-icons">
                     emoji_transportation
@@ -25,13 +30,24 @@
                 <span *ngIf="event.type=='trip'">
                     Sträcka: {{event.distance}} km
                 </span>
-                <span *ngIf="event.type=='expense'">
+                <span *ngIf="event.type=='expense' || event.type=='fillupgas'">
                     - By {{event.done_bies.length}}
                 </span>
-                <span>
+                <span *ngIf="event.type!='fillupgas'">
                     - For {{event.done_fors.length}}
                 </span>
             </mat-card-subtitle>
+            <p *ngIf="event==this.selectedEvent!" style="margin-top:5px">
+                <span *ngIf="event.type=='expense' || event.type=='fillupgas'"><b>By: </b></span>
+                <span *ngFor="let db of event.done_bies;let isLast=last">
+                    {{db.user.name}} ({{100 * db.part | number:'1.0-0'}}%){{isLast ? '' : ', '}}
+                </span>
+                <span *ngIf="event.type!='fillupgas'"><b>For: </b></span>
+                <span *ngFor="let df of event.done_fors;let isLast=last">
+                    {{df.user.name}} ({{100 * df.part | number:'1.0-0'}}%){{isLast ? '' : ', '}}
+                </span>
+
+            </p>
 
         </div>
         <div>
@@ -41,7 +57,6 @@
                 <button mat-raised-button style="transform: scale(0.8);" color="warn" (click)="deleteEvent(event)">
                     <i class="material-icons">delete</i></button>
             </mat-card-actions>
-
         </div>
 
     </mat-card-header>

@@ -40,7 +40,11 @@ export class GroupEventsComponent implements OnInit {
   }
 
   onSelect(event: GroupEvent): void {
-    this.selectedEvent = event;
+    if (this.selectedEvent == event) {
+      this.selectedEvent = undefined;
+    } else {
+      this.selectedEvent = event;
+    }
   }
 
   openAddEventDialog(): void {

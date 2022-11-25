@@ -10,6 +10,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
     selector: 'edit-group-events-dialog',
     templateUrl: './edit-group-event.component.html',
+    styleUrls: ["./edit-group-event.css"]
 })
 export class EditGroupEventDialog implements OnInit {
     @Input() group?: Group;

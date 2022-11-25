@@ -1,1 +1,33 @@
-<h2>Group finances</h2>
+<h2>
+    Group finances
+</h2>
+<p>
+    <span color="accent">
+        <b>Total expenses:</b> {{finances.moneySpent}} kr
+    </span>
+    -
+    <span color="accent">
+        <b>Total incomes:</b> {{finances.sumIncomes}} kr
+    </span>
+    -
+    <span color="accent">
+        <b>Total travel:</b> {{finances.distanceTravelled}} km
+    </span>
+
+</p>
+<p>
+    <mat-chip-listbox>
+
+        <span *ngFor="let owing of finances!.owings | keyvalue">
+            <span *ngFor="let owes of $any(owing).value | keyvalue">
+                <span *ngIf="owes.key != owing.key && owes.value != 0">
+                    <mat-chip color="accent">
+                        {{owing.key}} owes {{$any(owes.value) | number:'1.0-2'}} kr to {{owes.key}}
+                    </mat-chip>
+                </span>
+            </span>
+
+        </span>
+    </mat-chip-listbox>
+
+</p>

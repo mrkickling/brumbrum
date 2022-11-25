@@ -1,66 +1,8 @@
 /* eventsComponent's private CSS styles */
-.events {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 30em;
+.mat-mdc-card {
+    margin-bottom: 3px;
 }
 
-.events li {
-    display: flex;
-}
-
-.events button {
-    flex: 1;
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    background-color: #EEE;
-    margin: .5em;
-    padding: 0;
-    border-radius: 4px;
-    display: flex;
-    align-items: stretch;
-    height: 1.8em;
-}
-
-.events button:hover {
-    color: #2c3a41;
-    background-color: grey;
-    left: .1em;
-}
-
-.events button:active {
-    background-color: grey;
-    color: #fafafa;
-}
-
-.events button.selected {
-    background-color: grey;
-    color: white;
-}
-
-.events button.selected:hover {
-    background-color: grey;
-    color: white;
-}
-
-.events button.selected:active {
-    background-color: grey;
-    color: white;
-}
-
-.events .badge {
-    display: inline-block;
-    font-size: small;
-    color: white;
-    padding: 0.8em 0.7em 0 0.7em;
-    background-color: #405061;
-    line-height: 1em;
-    margin-right: .8em;
-    border-radius: 4px 0 0 4px;
-}
-
-.events .title {
-    align-self: center;
+.mat-mdc-card-header {
+    padding: 16px;
 }

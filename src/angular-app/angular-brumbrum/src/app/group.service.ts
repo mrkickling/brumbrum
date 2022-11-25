@@ -19,6 +19,13 @@ export class GroupService {
     );
   }
 
+  getFinances(code: string): Observable<any> {
+    const url = `${this.groupUrl}/${code}/finances`;
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError<any>(`getFinances id=${code}`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(`Could not perform ${operation}`);

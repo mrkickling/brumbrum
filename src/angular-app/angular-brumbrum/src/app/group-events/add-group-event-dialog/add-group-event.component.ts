@@ -9,6 +9,7 @@ import { Group } from 'src/app/group';
 @Component({
     selector: 'add-group-events-dialog',
     templateUrl: './add-group-event.component.html',
+    styleUrls: ['./add-group-event.css'],
 })
 export class AddGroupEventsDialog implements OnInit {
     @Input() group?: Group;

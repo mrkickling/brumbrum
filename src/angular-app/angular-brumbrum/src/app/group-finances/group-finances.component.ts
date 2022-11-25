@@ -4,29 +4,34 @@ import { GroupEvent } from '../group-event';
 import { GroupService } from '../group.service';
 import { ActivatedRoute } from '@angular/router';
 
-const emptyArticle = (): Group => ({
-  id: 0,
-  title: "Loading...",
-  description: "Loading...",
-  code: "Loading...",
-  createdAt: "Loading...",
-  updatedAt: "Loading...",
-  events: [],
-  members: []
-});
-
-
 @Component({
   selector: 'app-group-finances',
   templateUrl: './group-finances.component.html',
   styleUrls: ['./group-finances.component.css']
 })
 export class GroupFinancesComponent implements OnInit {
-  @Input() group: Group = emptyArticle();
+  @Input()
+  set group(group: Group) {
+    this._group = group;
+    this.getFinances();
+  }
+  get group(): Group {
+    return this._group;
+  }
+  private _group: any;
+
+  finances: any = { "Loading...": { "Loading...": { "Loading...": 0 } } };
 
   constructor(
     private groupService: GroupService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+  }
+
+  getFinances(): void {
+    const code = this.group.code;
+    this.groupService.getFinances(code)
+      .subscribe(finances => this.finances = finances);
+  }
 
   ngOnInit(): void {
   }

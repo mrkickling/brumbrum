@@ -25,6 +25,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +53,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatFormFieldModule,
     MatSelectModule,
     NgMultiSelectDropDownModule,
-    MatChipsModule
+    MatChipsModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [LogService],
   bootstrap: [AppComponent]
